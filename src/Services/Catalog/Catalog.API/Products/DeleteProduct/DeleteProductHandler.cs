@@ -11,11 +11,10 @@
             RuleFor(x => x.Id).NotEmpty().WithMessage("Product ID is required");
         }
     }
-    public class DeleteProductHandler(IDocumentSession session,ILogger<DeleteProductHandler> logger) : ICommandHandler<DeleteProductCommand, DeleteProductResult>
+    public class DeleteProductHandler(IDocumentSession session) : ICommandHandler<DeleteProductCommand, DeleteProductResult>
     {
         public async Task<DeleteProductResult> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
         {
-           logger.LogInformation("Handling DeleteProductCommand {@Command}", command);
 
             session.Delete<Product>(command.Id);
            
