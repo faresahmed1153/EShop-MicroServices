@@ -32,7 +32,13 @@ services:
       - "5055:80"
     depends_on:
       - catalogdb
-
+  
+  distributedcache:
+    container_name: distributedcache
+    restart: always
+    ports:
+      - "6379:6379"
+      
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -58,8 +64,10 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=hamda
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Redis=distributedcache:6379
     depends_on:
       - basketdb
+      - distributedcache
     ports:
       - "6001:8080"
       - "6061:8081"
