@@ -22,7 +22,7 @@ namespace BuildingBlocks.Behaviors
                 throw new ValidationException(failers);
 
 
-            return await next();
+            return await next(cancellationToken);
         }
     }
 }

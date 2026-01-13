@@ -1,6 +1,9 @@
-﻿namespace Basket.API.Basket.StoreBasket;
+﻿using Discount.Grpc;
+
+namespace Basket.API.Basket.StoreBasket;
 
 public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
+
 public record StoreBasketResult(string UserName);
 
 public class StoreBasketCommandValidator : AbstractValidator<StoreBasketCommand>
@@ -12,17 +15,30 @@ public class StoreBasketCommandValidator : AbstractValidator<StoreBasketCommand>
     }
 }
 
-public class StoreBasketCommandHandler
-    (IBasketRepository repository)
+public class StoreBasketCommandHandler(
+    IBasketRepository repository,
+    DiscountProtoService.DiscountProtoServiceClient discountProtoServiceClient)
     : ICommandHandler<StoreBasketCommand, StoreBasketResult>
 {
     public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
     {
-        
+        await ApplyDiscounts(command.Cart, cancellationToken);
         await repository.StoreBasket(command.Cart, cancellationToken);
 
         return new StoreBasketResult(command.Cart.UserName);
     }
 
-    
+    private async Task ApplyDiscounts(ShoppingCart cart, CancellationToken cancellationToken)
+    {
+        foreach (var item in cart.Items)
+        {
+            var discountRequest = new GetDiscountRequest { ProductName = item.ProductName };
+
+            var discountResponse =
+                await discountProtoServiceClient.GetDiscountAsync(discountRequest,
+                    cancellationToken: cancellationToken);
+
+            item.Price -= discountResponse.Amount;
+        }
+    }
 }
