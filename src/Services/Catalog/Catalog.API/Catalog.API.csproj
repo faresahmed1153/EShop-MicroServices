@@ -9,7 +9,7 @@
     <ItemGroup>
         <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0"/>
-        <PackageReference Include="Marten" Version="8.32.1"/>
+        <PackageReference Include="Marten" Version="9.5.3"/>
     </ItemGroup>
 
 

@@ -16,8 +16,8 @@
         <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="9.0.0"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0"/>
         <PackageReference Include="Grpc.AspNetCore" Version="2.80.0-pre1"/>
-        <PackageReference Include="Marten" Version="8.32.1"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.7"/>
+        <PackageReference Include="Marten" Version="9.5.3"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.8"/>
         <PackageReference Include="Scrutor" Version="7.0.0"/>
     </ItemGroup>
 
