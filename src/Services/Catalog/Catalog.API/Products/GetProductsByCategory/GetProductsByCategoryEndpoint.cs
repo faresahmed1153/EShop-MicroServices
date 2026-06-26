@@ -1,6 +1,6 @@
 ﻿namespace Catalog.API.Products.GetProductsByCategory
 {
-    //public record GetProductsByCategoryRequest(string category);
+    
     public class GetProductsByCategoryEndpoint: ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
